@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>../../../Pictures/simboloMinhoTeam.png</file>
+        <file>simboloMinhoTeam.png</file>
     </qresource>
 </RCC>

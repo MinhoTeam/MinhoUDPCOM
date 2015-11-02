@@ -4,7 +4,9 @@
 #include "serialport.h"
 
 SerialPort *mySerial = NULL;
-UDPCOM *udp;
+UDPCOM *udp = NULL;
+
+QString lidoSerial = "";
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -44,7 +46,14 @@ void MainWindow::on_btSendSerial_clicked()
 
 void MainWindow::readResponse()
 {
-    ui->plainTextEdit->appendPlainText("Serial: "+mySerial->readAll());
+    lidoSerial+= mySerial->readAll();
+    if(lidoSerial.contains("\n")){
+    if(ui->plainTextEdit->toPlainText().length()>1000) ui->plainTextEdit->clear();
+    ui->plainTextEdit->appendPlainText("Serial: "+lidoSerial);
+    if(udp!=NULL) udp->UDPwrite(lidoSerial);
+    lidoSerial = "";
+    }
+    else lidoSerial+=lidoSerial;
 }
 
 void MainWindow::on_btOpenSerial_clicked()
